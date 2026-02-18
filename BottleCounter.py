@@ -39,7 +39,6 @@ def count_bottles(image_path):
     
     # Canny edge detection to find edges in the blurred grayscale image. The parameters (10,75) are the lower and upper thresholds for hysteresis.
     edges = cv2.Canny(grayBlur,10,75)
-
     ### Morphology operations
     # Erosion works by sliding the kernel across the image. A pixel remains white (255) only if all pixels under the kernel are white,
     # otherwise, it becomes black (0). This reduces object boundaries and removes small white noise
@@ -89,6 +88,7 @@ def count_bottles(image_path):
     # Show the processed images and print the number of bottles detected
     # cv2.imshow('Edges', opening)
     cv2.imshow('Bottles', img)
+    cv2.imwrite('counting_result.png', img)
     print(f'Number of bottles detected: {counter}')
 
     # Wait for a key press and close all OpenCV windows
