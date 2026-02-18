@@ -50,7 +50,10 @@ Perspective Transformed image:
 <br />
 #### 2. Preprocessing:
 Converts the image to Grayscale to reduce the image from a three-channel (BGR) to a single-channel intensity image. This simplifies the processing pipeline and improves the performance of operations such as thresholding, edge detection, and contour extraction, then apply Median Blur (kernel size 15) to preserve edges while removing noise.
-
+<br />
+Gray blurred image:
+<img width="800" height="800" alt="grayblur" src="https://github.com/user-attachments/assets/9b3b41b5-f031-48ba-bcc9-5d509afdd869" />
+<br />
 Note!: Have already experimented converting the BGR blurred image to HSV color space then use a binary mask to identify pixels within the blue color range and apply the blue mask to the grayscale image to isolate bottle regions, however this step doesn't isolate the caps from blue bottles.<br />
 Identify blue bottles area using blue mask:
 <img width="1279" height="641" alt="masked_blue" src="https://github.com/user-attachments/assets/cca4c0b6-5362-4a01-84a6-b775b8bb439f" />
