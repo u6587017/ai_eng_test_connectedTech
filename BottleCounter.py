@@ -12,7 +12,7 @@ def count_bottles(image_path):
     rows,cols,ch = img.shape
 
     # Source points (manually selected 4 corners of bag region - top-left(x1,y1), top-right(x2,y2), bottom-left(x3,y3), bottom-right(x4,y4))
-    pts1 = np.float32([[234,7],[1170,12],[120,610],[1280,605]])
+    pts1 = np.float32([[230,7],[1160,12],[120,610],[1280,605]])
 
     # Destination points (transform into square top-down view with width and height of 800 pixels)
     pts2 = np.float32([[0,0],[800,0],[0,800],[800,800]])
@@ -32,11 +32,13 @@ def count_bottles(image_path):
     # From this experiment, median blur with kernel size of 15x15 provides good noise reduction without overly blurring the bottle edges better than GaussianBlur
 
     # grayBlur = cv2.GaussianBlur(gray, (15,15), 0)
-    grayBlur = cv2.medianBlur(gray, 15, 0)
+    grayBlur = cv2.medianBlur(gray, 21, 0)
 
     # Adaptive Threshold separate dark bottle openings from lighter background.
     threshold = cv2.adaptiveThreshold(grayBlur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 1)
-
+    
+    # Canny edge detection to find edges in the blurred grayscale image. The parameters (10,75) are the lower and upper thresholds for hysteresis.
+    edges = cv2.Canny(grayBlur,10,75)
 
     ### Morphology operations
     # Erosion works by sliding the kernel across the image. A pixel remains white (255) only if all pixels under the kernel are white,
@@ -50,30 +52,20 @@ def count_bottles(image_path):
 
     # All operations depend on the size and shape of the kernel and iterations
     # The kernel is a small matrix that defines the neighborhood for processing each pixel
-    kernel = np.ones((2,2), np.uint8)
-    opening = cv2.morphologyEx(threshold, cv2.MORPH_OPEN, kernel, iterations=3)
-
-    kernel = np.ones((5,5), np.uint8)
-    erosion = cv2.erode(opening, kernel, iterations=1)
 
     kernel = np.ones((3,3), np.uint8)
-    dilation = cv2.dilate(erosion, kernel, iterations=3)
-
-    kernel = np.ones((5,5), np.uint8)
-    erosion = cv2.erode(dilation, kernel, iterations=1)
+    dilation = cv2.dilate(edges, kernel, iterations=5)
 
     kernel = np.ones((3,3), np.uint8)
-    closing = cv2.morphologyEx(erosion, cv2.MORPH_CLOSE, kernel, iterations=3)
-
-    kernel = np.ones((4,4), np.uint8)
-    dilation = cv2.dilate(closing, kernel, iterations=5)
+    closing = cv2.morphologyEx(dilation, cv2.MORPH_CLOSE, kernel, iterations=5)
 
     kernel = np.ones((5,5), np.uint8)
-    erosion = cv2.erode(dilation, kernel, iterations=2)
+    opening = cv2.morphologyEx(closing, cv2.MORPH_OPEN, kernel, iterations=3)
+
     ## Morphology operations
 
     # Find contours of the bottles
-    result_img = erosion.copy()
+    result_img = opening.copy()
 
     # Detect connected regions corresponding to bottle openings
     contours, hierarchy = cv2.findContours(result_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
@@ -83,7 +75,7 @@ def count_bottles(image_path):
     for cnt in contours:
         # Calculate contour area to filter out small noise and large irrelevant contours
         area = cv2.contourArea(cnt)
-        if area>200 and area < 1200:
+        if area>150 and area < 2500:
             if len(cnt) >= 5:
                 # Fit an ellipse to the contour and draw it on the original image
                 ellipse = cv2.fitEllipse(cnt)
@@ -95,7 +87,7 @@ def count_bottles(image_path):
     cv2.putText(img, str(counter), (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 4, (0,0,255), 2, cv2.LINE_AA)
 
     # Show the processed images and print the number of bottles detected
-    cv2.imshow('Edges', erosion)
+    cv2.imshow('Edges', opening)
     cv2.imshow('Bottles', img)
     print(f'Number of bottles detected: {counter}')
 
