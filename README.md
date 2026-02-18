@@ -1,9 +1,9 @@
 # AI Engineer Selection Test
-Detecting multiple bottles using OpenCV in Python
+Detecting blue water bottles in a plastic bag using OpenCV in Python
 
-### Objective
+### Problem statement
 The objective of this test is to find the blue water bottles in a plastic bag in the image and identify them by counting them and display a screenshot. <br />
-It utilizes OpenCV to perform perspective correction, morphological segmentation, and contour analysis to accurately identify bottle openings.<br />
+My approach utilizes OpenCV to perform perspective correction, morphological segmentation, and contour analysis to accurately identify blue bottle caps.<br />
 
 ### Prerequisites
 You need Python 3.11 installed along with the following libraries:
@@ -25,7 +25,35 @@ python <script_name>.py <path_to_image>
 ```
 python BottleCounter.py Data_Bottles.png
 ```
+#### Example output in terminal:
+```
+Number of bottles detected: 133
+```
+
 
 The steps I used to achieve this are:
 1. Perspective Transform
-Since the given image is skewed and also consists of border which can be a noise, so perspective transform technique is is applied to the input image to adjust camera skew, ensuring the bottles appear top-down and uniformly sized.
+Since the given image is skewed and also consists of border which can be a noise, so perspective transform technique is applied to the input image to adjust camera skew, ensuring the bottles appear top-down and uniformly sized.
+
+2. Preprocessing:
+Converts the image to Grayscale.
+Applies Median Blur (kernel size 15) to preserve edges while removing noise.
+
+Note!: I've tried converting the BGR blurred image to HSV color space then use a binary mask to identify pixels within the blue color range and apply the blue mask to the grayscale image to isolate bottle regions, but it doesn't isolate the caps from blue bottles.
+
+3. Segmentation
+Uses Adaptive Gaussian Thresholding to create a binary mask in order to convert from grayscale image into binary (black & white) image. This technique separates bottle caps from the background, handling local lighting variation.
+
+4. Morphological operation:
+A heavy sequence of Opening, Erosion, Dilation, and Closing is applied to remove small white noise and fill holes inside the bottle caps. <br />
+According to "Data_Bottles.png", morphological operation sequence from the code performs the best, even if there are still noises from the border of image and also from the reflection of the plastic bag that contains blue bottles.
+
+- Erosion works by sliding the kernel across the image. A pixel remains white (255) only if all pixels under the kernel are white, otherwise, it becomes black (0). This reduces object boundaries and removes small white noise.
+
+- Dilation slides the kernel across the image and a pixel becomes white if at least one pixel under the kernel is white. This thickens white regions or objects and fills small holes.
+    
+- Opening involves erosion followed by dilation in the outer surface (the foreground) of the image.
+- Closing involves dilation followed by erosion in the outer surface (the foreground) of the image.
+
+- All operations depend on the size and shape of the kernel and iterations.
+- The kernel is a small matrix that defines the neighborhood for processing each pixel.
