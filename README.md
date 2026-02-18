@@ -8,7 +8,7 @@ My approach utilizes OpenCV to perform perspective correction, morphological seg
 ### Demo
 Input: Data_Bottles.png
 <img width="1279" height="641" alt="Data_Bottles" src="https://github.com/user-attachments/assets/64758824-bb42-40b3-a939-c8822c951ad4" />
-
+<br />
 Output:
 <img width="800" height="800" alt="counting_result" src="https://github.com/user-attachments/assets/8dcd40d2-aa69-4297-8ad1-96142b074926" />
 
@@ -32,7 +32,6 @@ python <script_name>.py <path_to_image>
 ```
 python BottleCounter.py Data_Bottles.png
 ```
-<img width="708" height="69" alt="terminal" src="https://github.com/user-attachments/assets/79dd02c0-4e54-483d-96eb-8bb420414291" />
 #### Example output in terminal:
 ```
 Number of bottles detected: 130
@@ -42,7 +41,13 @@ Number of bottles detected: 130
 ### Methodology:
 #### 1. Perspective Transform
 Since the given image is skewed and also consists of border which can be a noise, so perspective transform technique is applied to the input image to adjust camera skew, ensuring the bottles appear top-down and uniformly sized.
-
+<br />
+Original image:
+<img width="1279" height="641" alt="Data_Bottles" src="https://github.com/user-attachments/assets/a751d4b5-800c-4e6c-a522-115e345d55a7" />
+<br />
+Perspective Transformed image:
+<img width="800" height="800" alt="perspective_transform" src="https://github.com/user-attachments/assets/8e0b6f96-ff43-4491-aed9-5190ef614eaa" />
+<br />
 #### 2. Preprocessing:
 Converts the image to Grayscale to reduce the image from a three-channel (BGR) to a single-channel intensity image. This simplifies the processing pipeline and improves the performance of operations such as thresholding, edge detection, and contour extraction, then apply Median Blur (kernel size 15) to preserve edges while removing noise.
 
