@@ -42,10 +42,10 @@ Number of bottles detected: 130
 #### 1. Perspective Transform
 Since the given image is skewed and also consists of border which can be a noise, so perspective transform technique is applied to the input image to adjust camera skew, ensuring the bottles appear top-down and uniformly sized.
 <br />
-Original image:
+- Original image:
 <img width="1279" height="641" alt="Data_Bottles" src="https://github.com/user-attachments/assets/a751d4b5-800c-4e6c-a522-115e345d55a7" />
 <br />
-Perspective Transformed image:
+- Perspective Transformed image:
 <img width="800" height="800" alt="perspective_transform" src="https://github.com/user-attachments/assets/8e0b6f96-ff43-4491-aed9-5190ef614eaa" />
 <br />
 #### 2. Preprocessing:
