@@ -5,6 +5,13 @@ Detecting blue water bottles in a plastic bag using OpenCV in Python
 The objective of this test is to find the blue water bottles in a plastic bag in the image and identify them by counting them and display a screenshot. <br />
 My approach utilizes OpenCV to perform perspective correction, morphological segmentation, and contour analysis to accurately identify blue bottle caps.<br />
 
+### Demo
+Input: Data_Bottles.png
+<img width="1279" height="641" alt="Data_Bottles" src="https://github.com/user-attachments/assets/64758824-bb42-40b3-a939-c8822c951ad4" />
+
+Output:
+<img width="800" height="800" alt="counting_result" src="https://github.com/user-attachments/assets/8dcd40d2-aa69-4297-8ad1-96142b074926" />
+
 ### Prerequisites
 You need Python 3.11 installed along with the following libraries:
 - opencv-python
@@ -25,6 +32,7 @@ python <script_name>.py <path_to_image>
 ```
 python BottleCounter.py Data_Bottles.png
 ```
+<img width="708" height="69" alt="terminal" src="https://github.com/user-attachments/assets/79dd02c0-4e54-483d-96eb-8bb420414291" />
 #### Example output in terminal:
 ```
 Number of bottles detected: 130
