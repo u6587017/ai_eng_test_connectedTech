@@ -87,7 +87,7 @@ def count_bottles(image_path):
     cv2.putText(img, str(counter), (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 4, (0,0,255), 2, cv2.LINE_AA)
 
     # Show the processed images and print the number of bottles detected
-    cv2.imshow('Edges', opening)
+    # cv2.imshow('Edges', opening)
     cv2.imshow('Bottles', img)
     print(f'Number of bottles detected: {counter}')
 
