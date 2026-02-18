@@ -36,7 +36,10 @@ python BottleCounter.py Data_Bottles.png
 ```
 Number of bottles detected: 130
 ```
-
+Example usage:
+<br />
+https://github.com/user-attachments/assets/fddb59dc-a17c-4871-8589-7fb573290ae5
+<br />
 
 ### Methodology:
 #### 1. Perspective Transform
