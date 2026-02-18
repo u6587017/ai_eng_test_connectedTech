@@ -51,13 +51,16 @@ Perspective Transformed image:
 #### 2. Preprocessing:
 Converts the image to Grayscale to reduce the image from a three-channel (BGR) to a single-channel intensity image. This simplifies the processing pipeline and improves the performance of operations such as thresholding, edge detection, and contour extraction, then apply Median Blur (kernel size 15) to preserve edges while removing noise.
 
-Note!: Have already tried converting the BGR blurred image to HSV color space then use a binary mask to identify pixels within the blue color range and apply the blue mask to the grayscale image to isolate bottle regions, however this step doesn't isolate the caps from blue bottles.
-
+Note!: Have already experimented converting the BGR blurred image to HSV color space then use a binary mask to identify pixels within the blue color range and apply the blue mask to the grayscale image to isolate bottle regions, however this step doesn't isolate the caps from blue bottles.<br />
+Identify blue bottles area using blue mask:
+<img width="1279" height="641" alt="masked_blue" src="https://github.com/user-attachments/assets/cca4c0b6-5362-4a01-84a6-b775b8bb439f" />
+<br />
 #### 3. Segmentation
-Use canny, a popular edge detection detection algorithm, to detect bottle cap edges in images while reducing noise through gradient filtering, which results effectively clearer caps boundaries.
-
-Note!: Have already experimented with Adaptive Gaussian Thresholding to create a binary mask in order to convert from grayscale image into binary (black & white) image. This technique separates bottle caps from the background, handling local lighting variation.
-
+Use Canny, a popular edge detection detection algorithm, to detect bottle cap edges in images while reducing noise through gradient filtering, which results effectively clearer caps boundaries.
+<br />
+After apply Canny Edge Detection:
+<img width="800" height="800" alt="edges" src="https://github.com/user-attachments/assets/932b1c0b-d14a-4382-81ff-7d38fe6d8303" />
+Note!: Have already experimented with Adaptive Gaussian Thresholding to create a binary mask in order to convert from grayscale image into binary (black & white) image. This technique separates bottle caps from the background, handling local lighting variation. Nevertheless, the Canny edge detection algorithm demonstrates more promising results in highlighting bottle cap boundaries.
 
 #### 4. Morphological operation:
 In this experiment, I examined the image before and after applying morphological operations with varying parameters, such as kernel size and iteration. This process resulted in different sequences of operations that significantly affected the final detection outcome.
@@ -72,7 +75,10 @@ A sequence of Opening, Erosion, Dilation, and Closing is applied to remove small
 - Opening involves erosion followed by dilation in the outer surface (the foreground) of the image.
 
 - Closing involves dilation followed by erosion in the outer surface (the foreground) of the image.
-
+<br />
+Image after Morphological operation:
+<img width="800" height="800" alt="morph" src="https://github.com/user-attachments/assets/df6ead55-0bb9-4f9e-a4f3-20b917bfcfa6" />
+<br />
 Note!: All operations depend on the size and shape of the kernel and iterations. The kernel is a small matrix that defines the neighborhood for processing each pixel.
 
 
