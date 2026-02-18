@@ -101,7 +101,7 @@ The system will show the number of detected bottles in the terminal and visualiz
 Number of bottles detected: 130
 ```
 <br />
-Experiment with blurred image:
+Experimented with blurred image:
 <img width="800" height="800" alt="counting_result" src="https://github.com/user-attachments/assets/43282267-65ab-4abd-a542-83f6112e3985" />
 <br />
 
@@ -109,4 +109,4 @@ Experiment with blurred image:
 This system implemented with Traditional OpenCV Technique to achieve blue bottles counting, through edge detection, morphological operation and contour detection. While this approach can count accurately based on "Data_Bottles.png" image, such technique can be struggling when faced with blurred image or inconsistencies in camera positioning, which can ultimately lead to false positive or false negative in counting. So the another way is to use deep-learning approach, such as Single Shot Multibox Detector (SSD) by using pre-trained model to fine-tune on the images to improve robustness and generalization across varying lighting conditions perspectives, and image quality. However, this alternative approach comes with higher computational costs.
 
 ### Conclusion
-The system successfully detects and counts the majority of blue bottle caps. However, some detected caps appear larger than their actual size due to noise caused by border lighting and reflections on the plastic bag.
+The system successfully detects and counts the majority of blue bottle caps. However, some detected caps appear larger than their actual size due to noise caused by border lighting and reflections on the plastic bag. This approach is still struggling to accurately count on blurred image.
