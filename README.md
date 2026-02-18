@@ -12,7 +12,7 @@ You need Python 3.11 installed along with the following libraries:
 
 ### Install library using pip
 ```
-pip install numpy opencv-python
+pip install -r requirements.txt
 ```
 
 ### Usage
